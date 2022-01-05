@@ -1073,12 +1073,22 @@ public:
     }
     //------------Task9-----------------------------------
     //Prints all movies in a given year
+    void SearchMovieInYear(int year)
+    {
+        if (movieYearHashmap.count(year) == 0)
+            cout << "Movie Year Not Exists." << endl;
+        else
+        {
+            map<int, MovieList>::iterator initialitr;
+            initialitr = movieYearHashmap.find(year);
+            initialitr->second.PrintMovieInYear(year);
+        }
+    }
 
-    
-    void SearchMovieInYear(int year, MovieList &movieList)
+    void PrintMovieInYear(int year)
     {
         LinkedList<string> MovieTitles;
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
         while (temp != NULL)
         {
             if (temp->data.getTitleYear() == year)
@@ -1092,12 +1102,40 @@ public:
 
     //--------------Task10---------------
     //Prints the movies in ascending order
-    void PrintMoviesYearWise(MovieList &movieList)
+
+    void PrintMoviesYearWise(string order)
+    {
+        
+        if(order == "ascend")
+        {
+            cout << "Printing in the Ascending Order\n" << endl;
+            map<int, MovieList>::iterator itr;
+            for (itr = movieYearHashmap.begin(); itr != movieYearHashmap.end(); itr++) {
+                cout << '\nMovie Year is :' << itr->first << endl;
+                cout << endl;
+                itr->second.PrintMoviesYearWiseF();
+        }
+        }
+        else if(order == "descend")
+        {
+            cout << "Printing in the Descending Order\n" << endl;
+            map<int, MovieList>::reverse_iterator rev_itr;
+            for (rev_itr = movieYearHashmap.rbegin(); rev_itr != movieYearHashmap.rend(); rev_itr++)
+            {
+                cout << '\nMovie Year is :' << rev_itr->first << endl;
+                cout << endl;
+                rev_itr->second.PrintMoviesYearWiseF();
+            }
+             
+        }
+    }
+
+    void PrintMoviesYearWiseF()
     {
         string name;
         int year;
         LinkedList<MovieNode> movies;
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
         while (temp != NULL)
         {
             movies.InsertAtEnd(*temp);
@@ -1608,12 +1646,7 @@ public:
 
             InsertMovie(m); //insert each movie parsed into movielist
 
-            //hashmaps
-            //hashmaps
-            //hashmaps
-            //hashmaps
-            //hashmaps
-            //hashmaps
+            // data insertion in hashmaps
             if (directorListHashmap.count(m.getDirectorName()) == 0)
             {
                 MovieList tempmovie;
@@ -1672,10 +1705,8 @@ public:
             if (movieYearHashmap.count(m.getTitleYear()) == 0)
             {
                 MovieList tempMovieYear;
-                tempMovieYear.InsertMovie(m);
                 movieYearHashmap.insert(pair<int, MovieList>(m.getTitleYear(), tempMovieYear));
             }
-
             map<int, MovieList>::iterator movieYearitr;
             movieYearitr = movieYearHashmap.find(m.getTitleYear());
             movieYearitr->second.InsertMovie(m);
@@ -1753,12 +1784,14 @@ int main()
     // M.printActorCoactors("Jada Pinkett Smith");
     // M.printCoactorsOfCoactors("CCH Pounder", M);
     // string Actorname = "CCH Pounder";
-    M.printDirectorOfGenre("Documentary");
-    M.SearchMovie("Pirates");
+    // M.printDirectorOfGenre("Documentary");
+    // M.SearchMovie("Pirates");
+    // M.SearchMovieInYear(2015);
     // M.PrintMoviesRatingWise();
     // M.checkblah(Actorname,M.actorListHashmap);
     // M.checkIFCoActor("Christoph Waltz", "Rory Kinnear");
     cout << endl;
+    M.PrintMoviesYearWise("descend");
     // M.printUniqueCoActor("Jimmy Bennett");
 
     //M.printCheckIfCoActor("CCH Pounder", "Jimmy Bennett");
