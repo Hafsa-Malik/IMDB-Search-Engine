@@ -815,6 +815,18 @@ public:
     }
 
     //---------------Task 5--------------------------------
+
+    void checkIFCoActor(string name1, string name2)
+    {
+        if (actorListHashmap.count(name1) == 0)
+            cout << "Actor Not Found" << endl;
+        else
+        {
+            map<string, MovieList>::iterator actoritr;
+            actoritr = actorListHashmap.find(name1);
+            actoritr->second.checkIfCoActor(name1, name2);
+        }
+    }
     void checkIfCoActor(string name1, string name2)
     {
         if (start != NULL)
@@ -1658,15 +1670,15 @@ int main()
      string t;
      cout << "\nHint: Enter Johnny Depp\n\nEnter the name of the Actor:  ";
      getline(cin,t);
-     cout << t << endl;
-     M.printActorMovies(t);*/
+     cout << t << endl;*/
+    //  M.printActorMovies(t);
 
-    M.printActorCoactors("Jada Pinkett Smith");
-    M.printCoactorsOfCoactors("CCH Pounder", M);
-    string Actorname = "CCH Pounder";
-    M.SearchMovie("Pirates");
+    // M.printActorCoactors("Jada Pinkett Smith");
+    // M.printCoactorsOfCoactors("CCH Pounder", M);
+    // string Actorname = "CCH Pounder";
+    M.PrintMoviesRatingWise();
     // M.checkblah(Actorname,M.actorListHashmap);
-    // M.checkIfCoActor("Christoph Waltz", "Rory Kinnear");
+    M.checkIFCoActor("Christoph Waltz", "Rory Kinnear");
     cout << endl;
     //M.printUniqueCoActor("Jimmy Bennett");
 
