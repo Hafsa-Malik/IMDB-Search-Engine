@@ -957,6 +957,85 @@ public:
         }
     }
 
+    //-------------Task7----------------------------------------
+    //Print directors who have directed movies of a specific genre
+    bool SearchGenre(string genre, LinkedList<string> genreList)
+    {
+        ListNode<string> *Loc_ = genreList.Head;
+        bool found = false;
+        if (genreList.Head == NULL)
+        {
+            return found;
+        }
+
+        while (Loc_ != NULL)
+        {
+            if (Loc_->data.compare(genre) == 0)
+            {
+                found = true;
+                return found;
+            }
+            Loc_ = Loc_->next;
+        };
+    }
+
+    //------------------Task8-----------------------------------
+    MovieNode *SearchMovie(string title, MovieList &movieList)
+    {
+        //Searches and stores the data in Loc_ of the given movie
+        LinkedList<MovieNode> movies;
+        MovieNode *temp = movieList.start;
+
+        while (temp != NULL)
+        {
+            int count = 0;
+            for (int i = 0; i <= title.length(); i++)
+            {
+                if (title[i] == temp->data.getMovieTitle()[i])
+                {
+                    count++;
+                }
+            }
+            if (count == title.length())
+            {
+                cout << " MOVIE TITLE: " << temp->data.getMovieTitle() << endl;
+                cout << " GENRE: ";
+                ListNode<string> *Loc_ = temp->data.getGenres().Head;
+                while (Loc_ != NULL)
+                {
+                    cout << Loc_->data << "|";
+                    Loc_ = Loc_->next;
+                }
+                cout << "Release Year: " << temp->data.getTitleYear() << endl;
+                cout << "IMDB Score: " << temp->data.getImdbScore() << endl;
+                cout << "Director: " << temp->data.getDirectorName() << endl;
+                cout << "Director FB Likes: " << temp->data.getDirectorFbLikes() << endl;
+                cout << "Number of critical views: " << temp->data.getNumCriticForReviews() << endl;
+                cout << "Movie Duration: " << temp->data.getDuration() << endl;
+                cout << "Actor 1 Name: " << temp->data.getActor1Name() << endl;
+                cout << "Actor 1 FB Likes: " << temp->data.getActor1FbLikes() << endl;
+                cout << "Actor 2 Name: " << temp->data.getActor2Name() << endl;
+                cout << "Actor 2 FB Likes: " << temp->data.getActor2FbLikes() << endl;
+                cout << "Actor 3 Name: " << temp->data.getActor3Name() << endl;
+                cout << "Actor 3 FB Likes: " << temp->data.getActor3FbLikes() << endl;
+                cout << "Gross: " << temp->data.getGross() << endl;
+                cout << "Number of Voted Users: " << temp->data.getNumVotedUsers() << endl;
+                cout << "Total FB Likes: " << temp->data.getCastTotalFacebookLikes() << endl;
+                cout << "Face No. in Poster: " << temp->data.getFacenumberInPoster() << endl;
+                cout << "Movie IMDB Link: " << temp->data.getMovieImdbLink() << endl;
+                cout << "User for Reviews: " << temp->data.getNumUserForReviews() << endl;
+                cout << "Movie Language: " << temp->data.getLanguage() << endl;
+                cout << "Country: " << temp->data.getCountry() << endl;
+                cout << "Content Rating: " << temp->data.getContentRating() << endl;
+                cout << "Budget: " << temp->data.getBudget() << endl;
+                cout << "Aspect Ratio: " << temp->data.getAspectRatio() << endl;
+                cout << "Movie FB Likes: " << temp->data.getMovieFbLikes() << endl;
+                cout << "Color: " << temp->data.getColor() << endl;
+            }
+            temp = temp->next;
+        }
+    }
+
     //-------------Task11----------------------------------------
     //Search and print movies of a certain genre
     void PrintGenreMovie(string genre, MovieList &movieList)
@@ -988,8 +1067,8 @@ public:
             movies.InsertAtEnd(*temp);
             temp = temp->next;
         }
-        bubbleSortRating(&movies.start, movies.getLength());
-        ListNode<MovieNode> *temp2 = movies.start;
+        bubbleSortRating(&movies.Head, movies.getLength());
+        ListNode<MovieNode> *temp2 = movies.Head;
         while (temp2 != NULL)
         {
             name = temp2->data.data.getMovieTitle();
@@ -1011,6 +1090,8 @@ public:
     //Search and print movies of a certain genre rating wise
     void PrintGenreRatingWise(string genre, MovieList &movieList)
     {
+        string name;
+        float rating;
         MovieNode *temp = movieList.start;
         LinkedList<MovieNode> GenreMovies;
         while (temp != NULL)
@@ -1021,10 +1102,106 @@ public:
             }
             temp = temp->next;
         }
-        bubbleSortRating(&GenreMovies.start, GenreMovies.getLength());
-        GenreMovies.PrintList();
+        bubbleSortRating(&GenreMovies.Head, GenreMovies.getLength());
+        ListNode<MovieNode> *temp2 = GenreMovies.Head;
+        while (temp2 != NULL)
+        {
+            name = temp2->data.data.getMovieTitle();
+            rating = temp2->data.data.getImdbScore();
+            if (rating == -1.0)
+            {
+                cout << name << " | " << genre << "NULL Field" << endl;
+            }
+            else
+            {
+                cout << name << " | " << genre << rating << endl;
+            }
+            temp2 = temp2->next;
+        }
     }
     //------End of Task13-----------------------------------------
+
+    //-----------Functions to sort movies by year---------------
+    //---------Big-O-Complexity O(n^2) n squared
+    /*Function to swap the nodes */
+    ListNode<MovieNode> *swap(ListNode<MovieNode> *ptr1, ListNode<MovieNode> *ptr2)
+    {
+        ListNode<MovieNode> *tmp = ptr2->next;
+        ptr2->next = ptr1;
+        ptr1->next = tmp;
+        return ptr2;
+    }
+    /* Function to sort the list by year */
+    void bubbleSortYear(ListNode<MovieNode> **head, int count)
+    {
+        ListNode<MovieNode> **h;
+        int i, j, swapped;
+
+        for (i = 0; i <= count; i++)
+        {
+
+            h = head;
+            swapped = 0;
+
+            for (j = 0; j < count - i - 1; j++)
+            {
+
+                ListNode<MovieNode> *p1 = *h;
+                ListNode<MovieNode> *p2 = p1->next;
+
+                if (p1->data.data.getTitleYear() > p2->data.data.getTitleYear())
+                {
+
+                    /* update the link after swapping */
+                    *h = swap(p1, p2);
+                    swapped = 1;
+                }
+
+                h = &(*h)->next;
+            }
+
+            /* break if the loop ended without any swap */
+            if (swapped == 0)
+                break;
+        }
+    }
+    //-----------End of Functions to sort movies by year---------------
+
+    /* Function to sort the list by rating */
+    void bubbleSortRating(ListNode<MovieNode> **head, int count)
+    {
+        ListNode<MovieNode> **h;
+        int i, j, swapped;
+
+        for (i = 0; i <= count; i++)
+        {
+
+            h = head;
+            swapped = 0;
+
+            for (j = 0; j < count - i - 1; j++)
+            {
+
+                ListNode<MovieNode> *p1 = *h;
+                ListNode<MovieNode> *p2 = p1->next;
+
+                if (p1->data.data.getImdbScore() > p2->data.data.getImdbScore())
+                {
+
+                    /* update the link after swapping */
+                    *h = swap(p1, p2);
+                    swapped = 1;
+                }
+
+                h = &(*h)->next;
+            }
+
+            /* break if the loop ended without any swap */
+            if (swapped == 0)
+                break;
+        }
+    }
+    //-----------End of Functions to sort movies by rating---------------
 
     // void showBlah(map<string,MovieList> &M, string name)
     // {
