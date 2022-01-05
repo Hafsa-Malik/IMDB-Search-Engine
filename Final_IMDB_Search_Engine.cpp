@@ -594,7 +594,7 @@ public:
     int getLengthMovieNode()
     {
         int length2 = 0;
-        MovieNode* temp = start;
+        MovieNode *temp = start;
         while (temp != NULL)
         {
             length2++;
@@ -686,15 +686,15 @@ public:
 
     void searchMoviesAndYear(string ActorName)
     {
-        ListNode <MovieNode>* movies;
+        ListNode<MovieNode> *movies;
 
         if (start != NULL)
         {
 
-            MovieNode* temp = start;
+            MovieNode *temp = start;
             cout << "\nActor Name : " << ActorName << endl;
             cout << "Count of movies acted in : " << getLengthMovieNode() << endl;
-            
+
             while (temp != NULL)
             {
                 cout << temp->data.getMovieTitle() << " | " << temp->data.getTitleYear() << endl;
@@ -707,7 +707,6 @@ public:
             cout << "The list is Empty!" << endl;
         }
     }
-    
 
     //---------------Task2--------------------------------
     void printActorCoactors(string Actorname)
@@ -939,34 +938,19 @@ public:
         if (start != NULL)
         {
             MovieNode *temp = start;
-
+            bool found = false;
             while (temp != NULL)
             {
-                //if actor is actor1 print actor2 and actor3
-                if (name1.compare(temp->data.getActor1Name()) == 0)
+                if (temp->data.getActor1Name() == name2 || temp->data.getActor2Name() == name2 || temp->data.getActor3Name() == name2)
                 {
-                    if (name2.compare(temp->data.getActor2Name()) == 0 || name2.compare(temp->data.getActor3Name()) == 0)
-                    {
-                        cout << name1 << " and " << name2 << " are co-actors in movie \"" << temp->data.getMovieTitle() << "\"." << endl;
-                    }
-                }
-                //if actor is actor2 print actor1 and actor3
-                else if (name1.compare(temp->data.getActor2Name()) == 0)
-                {
-                    if (name2.compare(temp->data.getActor1Name()) == 0 || name2.compare(temp->data.getActor3Name()) == 0)
-                    {
-                        cout << name1 << " and " << name2 << " are co-actors in movie \"" << temp->data.getMovieTitle() << "\"" << endl;
-                    }
-                }
-                //if actor is actor3 print actor1 and actor2
-                else
-                {
-                    if (name2.compare(temp->data.getActor1Name()) == 0 || name2.compare(temp->data.getActor2Name()) == 0)
-                    {
-                        cout << name1 << " and " << name2 << " are co-actors in movie \"" << temp->data.getMovieTitle() << "\"" << endl;
-                    }
+                    cout << name1 << " and " << name2 << " are co-actors in movie \"" << temp->data.getMovieTitle() << "\"." << endl;
+                    found = true;
                 }
                 temp = temp->next;
+            }
+            if(!found)
+            {
+                cout << name1 << " and " << name2 << " are not co-actors in any movie." <<endl;
             }
         }
         else
@@ -1000,8 +984,6 @@ public:
         }
     }
 
-    
-
     //-------------------------------Task 5-------------------------------
 
     void printCheckIfCoActor(string Actor1, string Actor2)
@@ -1015,8 +997,6 @@ public:
             actoritr->second.checkIfCoActor(Actor1, Actor2);
         }
     }
-
-    
 
     //-------------Task7----------------------------------------
     //Print directors who have directed movies of a specific genre
@@ -1161,20 +1141,23 @@ public:
 
     void PrintMoviesYearWise(string order)
     {
-        
-        if(order == "ascend")
+
+        if (order == "ascend")
         {
-            cout << "Printing in the Ascending Order\n" << endl;
+            cout << "Printing in the Ascending Order\n"
+                 << endl;
             map<int, MovieList>::iterator itr;
-            for (itr = movieYearHashmap.begin(); itr != movieYearHashmap.end(); itr++) {
+            for (itr = movieYearHashmap.begin(); itr != movieYearHashmap.end(); itr++)
+            {
                 cout << '\nMovie Year is :' << itr->first << endl;
                 cout << endl;
                 itr->second.PrintMoviesYearWiseF();
+            }
         }
-        }
-        else if(order == "descend")
+        else if (order == "descend")
         {
-            cout << "Printing in the Descending Order\n" << endl;
+            cout << "Printing in the Descending Order\n"
+                 << endl;
             map<int, MovieList>::reverse_iterator rev_itr;
             for (rev_itr = movieYearHashmap.rbegin(); rev_itr != movieYearHashmap.rend(); rev_itr++)
             {
@@ -1182,7 +1165,6 @@ public:
                 cout << endl;
                 rev_itr->second.PrintMoviesYearWiseF();
             }
-             
         }
     }
 
@@ -1317,7 +1299,7 @@ public:
             }
             else
             {
-                cout << name << " | " << genre <<" | "<< rating << endl;
+                cout << name << " | " << genre << " | " << rating << endl;
             }
             temp2 = temp2->next;
         }
@@ -1847,104 +1829,135 @@ public:
 
 void menu(MovieList &movieList)
 {
-    cout << "\n\t\t\tIMDB TERM PROJECT" << endl << endl;
-    cout<< "The following functions can be performed using the program: \n" << endl;
-    cout<< "ACTOR FUNCTIONS: \n";
-    cout<< "1. Search profile of an actor \n2. Search co-actors of an actor \n3. Search unique co-actors \n4. Print all co-actors of the co-actors of an actor \n5. Checks whether A and B are co-actors or not\n\n";
-    cout<< "DIRECTOR FUNCTIONS: \n";
-    cout<< "6. Search director \n7. Print directors who have directed movies of a certain genre \n\n";
-    cout<< "MOVIE FUNCTIONS: \n";
-    cout<< "8. Search a movie \n9. Search movies released in a given year \n10. Print movies year-wise \n11. Search movies based on genre \n12. Print movies rating-wise \n13. Print movies of a ertain genre rating-wise \n14. Exit Program\n\n";
+    cout << "\n\t\t\tIMDB TERM PROJECT" << endl
+         << endl;
+    cout << "The following functions can be performed using the program: \n"
+         << endl;
+    cout << "ACTOR FUNCTIONS: \n";
+    cout << "1. Search profile of an actor \n2. Search co-actors of an actor \n3. Search unique co-actors \n4. Print all co-actors of the co-actors of an actor \n5. Checks whether A and B are co-actors or not\n\n";
+    cout << "DIRECTOR FUNCTIONS: \n";
+    cout << "6. Search director \n7. Print directors who have directed movies of a certain genre \n\n";
+    cout << "MOVIE FUNCTIONS: \n";
+    cout << "8. Search a movie \n9. Search movies released in a given year \n10. Print movies year-wise \n11. Search movies based on genre \n12. Print movies rating-wise \n13. Print movies of a ertain genre rating-wise \n14. Exit Program\n\n";
     int option = 0, value, year;
-    string name,genre,title;
+    string name, genre, title;
 
     // DO-WHILE loop
-    do {
-        cout<< "\nSelect an option: ";
-        cin>>option;
+    do
+    {
+        cout << "\nSelect an option: ";
+        cin >> option;
 
-        if (option == 1) {
-            cout<< "Enter actor name: ";
-            getline(cin,name);
-            getline(cin,name);
+        if (option == 1)
+        {
+            cout << "Enter actor name: ";
+            getline(cin, name);
+            getline(cin, name);
             movieList.printSearchActor(name);
-        } else if (option == 2) {
-            cout<< "Enter actor name whose co-actors are to be found: ";
-            getline(cin,name);
-            getline(cin,name);
+        }
+        else if (option == 2)
+        {
+            cout << "Enter actor name whose co-actors are to be found: ";
+            getline(cin, name);
+            getline(cin, name);
             movieList.printActorCoactors(name);
-        } else if (option == 3) {
-            cout<< "Enter actor name whose unique co-actors are to be found: ";
-            getline(cin,name);
-            getline(cin,name);
+        }
+        else if (option == 3)
+        {
+            cout << "Enter actor name whose unique co-actors are to be found: ";
+            getline(cin, name);
+            getline(cin, name);
             movieList.printUniqueCoActor(name);
-        } else if (option == 4) {
-            cout<< "Enter actor name: ";
-            getline(cin,name);
-            getline(cin,name);
-            movieList.printCoactorsOfCoactors(name,movieList);
-        } else if (option == 5) {
+        }
+        else if (option == 4)
+        {
+            cout << "Enter actor name: ";
+            getline(cin, name);
+            getline(cin, name);
+            movieList.printCoactorsOfCoactors(name, movieList);
+        }
+        else if (option == 5)
+        {
             string name1;
             string name2;
-            cout<< "Enter actor 1 name: ";
-            getline(cin,name1);
-            getline(cin,name1);
-            cout<< "Enter actor 2 name: ";
-            getline(cin,name2);
-            movieList.checkIfCoActor(name1,name2);
-        } else if (option == 6) {
-            cout<< "Enter director name: ";
-            getline(cin,name);
-            getline(cin,name);
+            cout << "Enter actor 1 name: ";
+            getline(cin, name1);
+            getline(cin, name1);
+            cout << "Enter actor 2 name: ";
+            getline(cin, name2);
+            movieList.printCheckIfCoActor("CCH Pounder", "Wes Studi");
+        }
+        else if (option == 6)
+        {
+            cout << "Enter director name: ";
+            getline(cin, name);
+            getline(cin, name);
             movieList.printDirector(name);
-        } else if (option == 7) {
-            cout<< "Enter genre: ";
-            getline(cin,genre);
-            getline(cin,genre);
+        }
+        else if (option == 7)
+        {
+            cout << "Enter genre: ";
+            getline(cin, genre);
+            getline(cin, genre);
             movieList.printDirectorOfGenre(genre);
-        } else if (option == 8) {
-            cout<< "Enter movie title: ";
-            getline(cin,title);
-            getline(cin,title);
+        }
+        else if (option == 8)
+        {
+            cout << "Enter movie title: ";
+            getline(cin, title);
+            getline(cin, title);
             movieList.SearchMovie(title);
-        } else if (option == 9) {
-            cout<< "Enter release year: ";
+        }
+        else if (option == 9)
+        {
+            cout << "Enter release year: ";
             cin >> year;
             movieList.SearchMovieInYear(year);
-        } else if (option == 10) {
+        }
+        else if (option == 10)
+        {
             string choice;
-            cout<< "Press: \ni to print in increasing order\nd to print in decreasing order\nEnter choice: ";
+            cout << "Press: \ni to print in increasing order\nd to print in decreasing order\nEnter choice: ";
             cin >> choice;
-            if(choice=="i") {
+            if (choice == "i")
+            {
                 movieList.PrintMoviesYearWise("ascend");
             }
-            else if (choice=="d") {
+            else if (choice == "d")
+            {
                 movieList.PrintMoviesYearWise("descend");
             }
-            else {
+            else
+            {
                 cout << "Invalid Option!" << endl;
             }
-            
-        } else if (option == 11) {
-            cout<< "Enter genre: ";
-            getline(cin,genre);
-            getline(cin,genre);
-            movieList.SearchMovieByGenre(genre);
-        } else if (option == 12) {
-            movieList.PrintMoviesRatingWise();
-        } else if (option == 13) {
-            string genre;
-            cout<< "Enter genre: ";
-            getline(cin,genre);
-            getline(cin,genre);
-            movieList.PrintGenreRatingWise(genre);
-        } 
-         else {
-            cout<< "Invalid option!\n";
         }
-    }while (option != 14);
+        else if (option == 11)
+        {
+            cout << "Enter genre: ";
+            getline(cin, genre);
+            getline(cin, genre);
+            movieList.SearchMovieByGenre(genre);
+        }
+        else if (option == 12)
+        {
+            movieList.PrintMoviesRatingWise();
+        }
+        else if (option == 13)
+        {
+            string genre;
+            cout << "Enter genre: ";
+            getline(cin, genre);
+            getline(cin, genre);
+            movieList.PrintGenreRatingWise(genre);
+        }
+        else
+        {
+            cout << "Invalid option!\n";
+        }
+    } while (option != 14);
 
-    cout<< "Program ended.\n";
+    cout << "Program ended.\n";
 }
 //main
 int main()
@@ -1975,7 +1988,7 @@ int main()
     // cout << endl;
     // // M.PrintGenreRatingWise("Action");
     // // M.PrintMoviesYearWise("descend");
-    
+
     // M.SearchMovieByGenre("Action");
     // M.PrintMoviesRatingWise();
     // M.printUniqueCoActor("Jimmy Bennett");
