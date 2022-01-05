@@ -589,6 +589,20 @@ public:
     {
         return length;
     }
+
+    //getter of length of movie list
+    int getLengthMovieNode()
+    {
+        int length2 = 0;
+        MovieNode* temp = start;
+        while (temp != NULL)
+        {
+            length2++;
+            temp = temp->next;
+        }
+        return length2;
+    }
+
     // DirectorList directorListHashmap; //initialize a director list to insert directors in it
     // ActorList actorList;       //initialize an actor list to insert actors in it
 
@@ -657,6 +671,42 @@ public:
         }
     }
 
+    //----------------Task 1----------------------
+    void printSearchActor(string Actorname)
+    {
+        if (actorListHashmap.count(Actorname) == 0)
+            cout << "Actor Not Found" << endl;
+        else
+        {
+            map<string, MovieList>::iterator actoritr;
+            actoritr = actorListHashmap.find(Actorname);
+            actoritr->second.searchMoviesAndYear(Actorname);
+        }
+    }
+
+    void searchMoviesAndYear(string ActorName)
+    {
+        ListNode <MovieNode>* movies;
+
+        if (start != NULL)
+        {
+
+            MovieNode* temp = start;
+            cout << "\nActor Name : " << ActorName << endl;
+            cout << "Count of movies acted in : " << getLengthMovieNode() << endl;
+            
+            while (temp != NULL)
+            {
+                cout << temp->data.getMovieTitle() << " | " << temp->data.getTitleYear() << endl;
+                temp = temp->next;
+            }
+            cout << endl;
+        }
+        else
+        {
+            cout << "The list is Empty!" << endl;
+        }
+    }
     
 
     //---------------Task2--------------------------------
@@ -1817,6 +1867,7 @@ void menu(MovieList &movieList)
             cout<< "Enter actor name: ";
             getline(cin,name);
             getline(cin,name);
+            movieList.printSearchActor(name);
         } else if (option == 2) {
             cout<< "Enter actor name whose co-actors are to be found: ";
             getline(cin,name);
