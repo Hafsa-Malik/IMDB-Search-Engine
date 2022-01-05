@@ -657,6 +657,8 @@ public:
         }
     }
 
+    
+
     //---------------Task2--------------------------------
     void printActorCoactors(string Actorname)
     {
@@ -1793,7 +1795,7 @@ public:
     }
 };
 
-void menu(MovieList movieList)
+void menu(MovieList &movieList)
 {
     cout << "\n\t\t\tIMDB TERM PROJECT" << endl << endl;
     cout<< "The following functions can be performed using the program: \n" << endl;
@@ -1814,16 +1816,20 @@ void menu(MovieList movieList)
         if (option == 1) {
             cout<< "Enter actor name: ";
             getline(cin,name);
+            getline(cin,name);
         } else if (option == 2) {
             cout<< "Enter actor name whose co-actors are to be found: ";
+            getline(cin,name);
             getline(cin,name);
             movieList.printActorCoactors(name);
         } else if (option == 3) {
             cout<< "Enter actor name whose unique co-actors are to be found: ";
             getline(cin,name);
+            getline(cin,name);
             movieList.printUniqueCoActor(name);
         } else if (option == 4) {
             cout<< "Enter actor name: ";
+            getline(cin,name);
             getline(cin,name);
             movieList.printCoactorsOfCoactors(name,movieList);
         } else if (option == 5) {
@@ -1831,19 +1837,23 @@ void menu(MovieList movieList)
             string name2;
             cout<< "Enter actor 1 name: ";
             getline(cin,name1);
+            getline(cin,name1);
             cout<< "Enter actor 2 name: ";
             getline(cin,name2);
             movieList.checkIfCoActor(name1,name2);
         } else if (option == 6) {
             cout<< "Enter director name: ";
             getline(cin,name);
+            getline(cin,name);
             movieList.printDirector(name);
         } else if (option == 7) {
             cout<< "Enter genre: ";
             getline(cin,genre);
+            getline(cin,genre);
             movieList.printDirectorOfGenre(genre);
         } else if (option == 8) {
             cout<< "Enter movie title: ";
+            getline(cin,title);
             getline(cin,title);
             movieList.SearchMovie(title);
         } else if (option == 9) {
@@ -1867,12 +1877,14 @@ void menu(MovieList movieList)
         } else if (option == 11) {
             cout<< "Enter genre: ";
             getline(cin,genre);
+            getline(cin,genre);
             movieList.SearchMovieByGenre(genre);
         } else if (option == 12) {
             movieList.PrintMoviesRatingWise();
         } else if (option == 13) {
             string genre;
             cout<< "Enter genre: ";
+            getline(cin,genre);
             getline(cin,genre);
             movieList.PrintGenreRatingWise(genre);
         } 
