@@ -1417,7 +1417,7 @@ int main()
     M.printActorCoactors("Jada Pinkett Smith");
     M.printCoactorsOfCoactors("CCH Pounder", M);
     string Actorname = "CCH Pounder";
-    M.checkblah(Actorname,M.actorListHashmap);
+    // M.checkblah(Actorname,M.actorListHashmap);
     // M.checkIfCoActor("Christoph Waltz", "Rory Kinnear");
     cout << endl;
     //M.printUniqueCoActor("Jimmy Bennett");
