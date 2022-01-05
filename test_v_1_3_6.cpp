@@ -977,11 +977,12 @@ public:
     void SearchMovie(string title, MovieList &movieList)
     {
         //Searches and stores the data in Loc_ of the given movie
-        LinkedList<MovieNode> movies;
+        // LinkedList<MovieNode> movies;
         MovieNode *temp = movieList.start;
 
         while (temp != NULL)
         {
+
             int count = 0;
             for (int i = 0; i <= title.length(); i++)
             {
@@ -989,9 +990,14 @@ public:
                 {
                     count++;
                 }
+                else
+                {
+                    break;
+                }
             }
             if (count == title.length())
             {
+                cout << "m" << endl;
                 cout << " MOVIE TITLE: " << temp->data.getMovieTitle() << endl;
                 cout << " GENRE: ";
                 ListNode<string> *Loc_ = temp->data.getGenres().Head;
@@ -1658,6 +1664,7 @@ int main()
     M.printActorCoactors("Jada Pinkett Smith");
     M.printCoactorsOfCoactors("CCH Pounder", M);
     string Actorname = "CCH Pounder";
+    M.SearchMovie("Pirates", M);
     // M.checkblah(Actorname,M.actorListHashmap);
     // M.checkIfCoActor("Christoph Waltz", "Rory Kinnear");
     cout << endl;
