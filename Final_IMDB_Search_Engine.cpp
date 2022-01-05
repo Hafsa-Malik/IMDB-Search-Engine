@@ -1388,7 +1388,7 @@ public:
                 ListNode<MovieNode> *p1 = *h;
                 ListNode<MovieNode> *p2 = p1->next;
 
-                if (p1->data.data.getImdbScore() > p2->data.data.getImdbScore())
+                if (p1->data.data.getImdbScore() < p2->data.data.getImdbScore())
                 {
 
                     /* update the link after swapping */
