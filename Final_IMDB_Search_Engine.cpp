@@ -948,9 +948,9 @@ public:
                 }
                 temp = temp->next;
             }
-            if(!found)
+            if (!found)
             {
-                cout << name1 << " and " << name2 << " are not co-actors in any movie." <<endl;
+                cout << name1 << " and " << name2 << " are not co-actors in any movie." << endl;
             }
         }
         else
@@ -1388,41 +1388,7 @@ public:
     }
     //-----------End of Functions to sort movies by rating---------------
 
-    // void showBlah(map<string,MovieList> &M, string name)
-    // {
-    //     map<string, MovieList>::iterator itr;
-    //     itr = M.find(name);
-    //     itr->second.showMovies();
-
-    // }
-
-    // void checkblah(string actor, map<string,MovieList> &hashmaptemp)
-    // {
-    //     map<string, MovieList> tempMap(actorListHashmap.begin(),actorListHashmap.end());
-    //     map<string, MovieList>::iterator actoritrl;
-
-    //     // cout << "\nThe map gquiz1 is : \n";
-    //     // cout << "\tKEY\tELEMENT\n";
-    //     // int count = 1;
-    //     // for (actoritrl = tempMap.begin(); actoritrl != tempMap.end(); ++actoritrl)
-    //     // {
-    //     //        if(count > 50)
-    //     //             break;
-    //     //         count++;
-    //     //     cout << '\t' << actoritrl->first << endl;
-    //     //     actoritrl->second.showMovies();
-    //     // }
-    //     if (tempMap.count(actor) == 0)
-    //         cout << "Actor Not Found Blah" << endl;
-    //     else
-    //     {
-    //         map<string, MovieList>::iterator actoritr;
-    //         actoritr = tempMap.find("Christoph Waltz");
-    //         showBlah(hashmaptemp,actor);
-
-    //         // actoritr->second.showMoviesAndRatings();
-    //     }
-    // }
+    
 
     //Parser
     ifstream myFileStream;       //initialize a file stream
@@ -1432,15 +1398,14 @@ public:
         if (myFileStream.fail())     //Show error message if the file failed to open
             cout << "File does not exist" << endl;
         string line;
-        int count = 1;
-        int itPe = 0;
-
-        int itP = 0;
-
+        
+        //file parser
         while (getline(myFileStream, line))
         {
             //parse each line separately
             stringstream ss(line);
+
+            //objects to store and get data from streams
             Movie m;
             string tempString;
             string tempString2;
@@ -1448,6 +1413,12 @@ public:
             string x;
             //parse each string to right field
             getline(ss, tempString, '#');
+
+            /*parsing the file by line by line and then setting the data in the 
+            movie object
+            then passing that object in the insert function to insert it in the movieList class 
+            as the movienode object i.e. as pointer
+            and then storing those pointers in the hashmaps as MovieLists in them*/
 
             if (tempString[0] == '"')
             {
@@ -1460,11 +1431,7 @@ public:
             }
             m.setMovieTitle(tempString);
             getline(ss, tempString, ',');
-            if (count < 5)
-            {
-                //cout << tempString << endl;
-                count++;
-            }
+            
             stringstream tempss(tempString);
             LinkedList<string> genre;
             while (getline(tempss, tempString2, '|'))
@@ -1706,123 +1673,170 @@ public:
                 m.setColor(tempString);
             }
 
-            InsertMovie(m); //insert each movie parsed into movielist
+            //insert each movie parsed into movielist
+            InsertMovie(m);
 
             // data insertion in hashmaps
+
+            //Data insertion in the Director Hash Map with director name as key and MovieList in the value which is made up of movienode class
+
+            //checking if they key is alredy present or not
             if (directorListHashmap.count(m.getDirectorName()) == 0)
             {
                 MovieList tempmovie;
-                // tempmovie.InsertMovie(m);
-                // itPe++;
-                // cout << itPe << endl;
+
+                //if key is not present make a new <key, value> pair with key as that value
                 directorListHashmap.insert(pair<string, MovieList>(m.getDirectorName(), tempmovie));
             }
 
+            // making an iterator to iterate the map
             map<string, MovieList>::iterator directoritr;
-            directoritr = directorListHashmap.find(m.getDirectorName());
-            directoritr->second.InsertMovie(m);
-            // itPe++;
-            // cout << itPe << endl;
 
+            // getting the <Key,Value> pair in the iterator of the given key
+            directoritr = directorListHashmap.find(m.getDirectorName());
+
+            //inserting the data into the value with the key of the given director name
+            directoritr->second.InsertMovie(m);
+
+            //Data insertion in the Actor Hash Map with actor name as key and MovieList in the value which is made up of movienode class
+
+            // for all the 3 movie actor insertions below
+
+            //checking if they key is alredy present or not
             if (actorListHashmap.count(m.getActor1Name()) == 0)
             {
                 MovieList tempactorlist1;
+
+                //if key is not present make a new <key, value> pair with key as that value
                 actorListHashmap.insert(pair<string, MovieList>(m.getActor1Name(), tempactorlist1));
-                // itP++;
-                // cout << "\t\t " << itP << endl;
             }
 
+            // making an iterator to iterate the map
             map<string, MovieList>::iterator actor1itr;
-            actor1itr = actorListHashmap.find(m.getActor1Name());
-            actor1itr->second.InsertMovie(m);
-            // itP ++;
-            // cout << "\t\t " << itP << endl;
 
+            // getting the <Key,Value> pair in the iterator of the given key
+            actor1itr = actorListHashmap.find(m.getActor1Name());
+
+            //inserting the data into the value with the key of the given Actor name
+            actor1itr->second.InsertMovie(m);
+
+            //checking if they key is alredy present or not
             if (actorListHashmap.count(m.getActor2Name()) == 0)
             {
                 MovieList tempactorlist2;
+
+                //if key is not present make a new <key, value> pair with key as that value
                 actorListHashmap.insert(pair<string, MovieList>(m.getActor2Name(), tempactorlist2));
-                // itP++;
-                // cout << "\t " << itP << endl;
             }
 
+            // making an iterator to iterate the map
             map<string, MovieList>::iterator actor2itr;
-            actor2itr = actorListHashmap.find(m.getActor2Name());
-            actor2itr->second.InsertMovie(m);
-            // itP ++;
-            // cout << "\t\t " << itP << endl;
 
+            // getting the <Key,Value> pair in the iterator of the given key
+            actor2itr = actorListHashmap.find(m.getActor2Name());
+
+            //inserting the data into the value with the key of the given Actor name
+            actor2itr->second.InsertMovie(m);
+
+            //checking if they key is already present or not
             if (actorListHashmap.count(m.getActor3Name()) == 0)
             {
                 MovieList tempactorlist3;
+
+                //if key is not present make a new <key, value> pair with key as that value
                 actorListHashmap.insert(pair<string, MovieList>(m.getActor3Name(), tempactorlist3));
-                // itP++;
-                // cout << "\t\t " << itP << endl;
             }
 
+            // making an iterator to iterate the map
             map<string, MovieList>::iterator actor3itr;
+
+            // getting the <Key,Value> pair in the iterator of the given key
             actor3itr = actorListHashmap.find(m.getActor3Name());
+
+            //inserting the data into the value with the key of the given Actor name
             actor3itr->second.InsertMovie(m);
 
+            // MovieYearHashMap with key as int i.e. release year of the movie
+
+            //checking if they key is already present or not
             if (movieYearHashmap.count(m.getTitleYear()) == 0)
             {
                 MovieList tempMovieYear;
+                //if key is not present make a new <key, value> pair with key as that value
                 movieYearHashmap.insert(pair<int, MovieList>(m.getTitleYear(), tempMovieYear));
             }
+
+            // making an iterator to iterate the map
             map<int, MovieList>::iterator movieYearitr;
+
+            // getting the <Key,Value> pair in the iterator of the given key
             movieYearitr = movieYearHashmap.find(m.getTitleYear());
+
+            //inserting the data into the value with the key of the given Movie Release Year
             movieYearitr->second.InsertMovie(m);
 
+            // MovieNameHashMap with movie name as the key and movieList as Value consisting of MovieNode class
+
+            //checking if they key is already present or not
             if (movieNameHashmap.count(m.getMovieTitle()) == 0)
             {
                 MovieList tempMovieYear;
-                tempMovieYear.InsertMovie(m);
+                //if key is not present make a new <key, value> pair with key as that value
                 movieNameHashmap.insert(pair<string, MovieList>(m.getMovieTitle(), tempMovieYear));
             }
 
+            // making an iterator to iterate the map
             map<string, MovieList>::iterator movieNameitr;
+
+            // getting the <Key,Value> pair in the iterator of the given key
             movieNameitr = movieNameHashmap.find(m.getMovieTitle());
+
+            //inserting the data into the value with the key of the given Movie name
             movieNameitr->second.InsertMovie(m);
 
-            string movieNameFull = m.getMovieTitle();
-            char movieNameInitial = movieNameFull[0];
+            //MovieNameInitialHashMap to store the movienode in the movielist as values
+            // with the key as the initial of each movie
+
+            //checking if they key is already present or not
             if (movieInitialNameHashmap.count(m.getMovieTitle()[0]) == 0)
             {
                 MovieList tempMovieInitial;
+                //if key is not present make a new <key, value> pair with key as that value
                 movieInitialNameHashmap.insert(pair<char, MovieList>(m.getMovieTitle()[0], tempMovieInitial));
             }
 
+            // making an iterator to iterate the map
             map<char, MovieList>::iterator movieNameInititr;
+
+            // getting the <Key,Value> pair in the iterator of the given key
             movieNameInititr = movieInitialNameHashmap.find(m.getMovieTitle()[0]);
+
+            //inserting the data into the value with the key of the Initial of the given Movie name
             movieNameInititr->second.InsertMovie(m);
 
+            //running the loop equal to the no. of genre it has
             for (int i = 0; i < genre.length; i++)
             {
+                //getting the genre at the index i in the linked list of genre
                 string tempGenre = genre.valueAtIndex(i);
+
+                //checking if they key is already present or not
                 if (genreHashmap.count(tempGenre) == 0)
                 {
                     MovieList tempMovieGenre;
+                    //if key is not present make a new <key, value> pair with key as that value
                     genreHashmap.insert(pair<string, MovieList>(tempGenre, tempMovieGenre));
                 }
 
+                // making an iterator to iterate the map
                 map<string, MovieList>::iterator movieGenreitr;
+
+                // getting the <Key,Value> pair in the iterator of the given key
                 movieGenreitr = genreHashmap.find(tempGenre);
+
+                //inserting the data into the value with the key of the genre at index i of the given Movie name
                 movieGenreitr->second.InsertMovie(m);
             }
-
-            // itP ++;
-
-            // cout << "\t\t\t " << itP << endl;
-
-            // if(directorListHashmap.count(m.getDirectorName()) == 0)
-            // {
-            //     tempmovie.InsertMovie(m);
-            //     itPe++;
-
-            //     itPe++;
-
-            //     cout << itPe << endl;
-            // }
         }
     }
 };
@@ -1844,10 +1858,12 @@ void menu(MovieList &movieList)
 
     // DO-WHILE loop
     do
-    {
+    {   
+        //asking user which option he want to choose
         cout << "\nSelect an option: ";
         cin >> option;
 
+        //running the option user choose
         if (option == 1)
         {
             cout << "Enter actor name: ";
@@ -1885,7 +1901,7 @@ void menu(MovieList &movieList)
             getline(cin, name1);
             cout << "Enter actor 2 name: ";
             getline(cin, name2);
-            movieList.printCheckIfCoActor("CCH Pounder", "Wes Studi");
+            movieList.printCheckIfCoActor(name1, name2);
         }
         else if (option == 6)
         {
@@ -1962,38 +1978,19 @@ void menu(MovieList &movieList)
 //main
 int main()
 {
+    //Making a movieList object 
     MovieList M = MovieList(MovieList());
+
+    //saving location of the dataset file
     const char *p1 = "E:\\OneDrive - National University of Sciences & Technology\\1. Uni Semester\\3rd Semester\\Data Structures & Algorithms\\Labs\\IMDB-Search-Engine\\test.txt";
     char *p2;
     p2 = const_cast<char *>(p1);
+
+    //parsing the data file at the Given Location
     M.SetFile(p2);
+
+    //calling the menu function and passing M in it to get it read the parsed data
     menu(M);
 
-    /* M.printDirector("Ben Stiller");
-     string t;
-     cout << "\nHint: Enter Johnny Depp\n\nEnter the name of the Actor:  ";
-     getline(cin,t);
-     cout << t << endl;*/
-    //  M.printActorMovies(t);
-
-    // M.printActorCoactors("Jada Pinkett Smith");
-    // M.printCoactorsOfCoactors("CCH Pounder", M);
-    // string Actorname = "CCH Pounder";
-    // M.printDirectorOfGenre("Documentary");
-    // M.SearchMovie("Pirates");
-    // M.SearchMovieInYear(2015);
-    // M.PrintMoviesRatingWise();
-    // M.checkblah(Actorname,M.actorListHashmap);
-    // M.checkIFCoActor("Christoph Waltz", "Rory Kinnear");
-    // cout << endl;
-    // // M.PrintGenreRatingWise("Action");
-    // // M.PrintMoviesYearWise("descend");
-
-    // M.SearchMovieByGenre("Action");
-    // M.PrintMoviesRatingWise();
-    // M.printUniqueCoActor("Jimmy Bennett");
-
-    //M.printCheckIfCoActor("CCH Pounder", "Jimmy Bennett");
-    // SearchActor("CCH Pounder", M);
     return 0;
 }
