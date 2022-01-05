@@ -788,14 +788,14 @@ public:
                 cout << "Co-Actors of " << coactor1 << " :-\n"
                      << endl;
 
-                printActorCoactors(coactor1, movieList);
+                printActorofCoactors(coactor1, movieList);
 
                 cout << "\n------------------------------------------------------------------" << endl;
                 cout << "\t\tCoactor-2: " << coactor2 << endl;
                 cout << "------------------------------------------------------------------" << endl;
                 cout << "Co-Actors of " << coactor2 << " :-\n"
                      << endl;
-                printActorCoactors(coactor2, movieList);
+                printActorofCoactors(coactor2, movieList);
                 temp = temp->next;
             }
         }
@@ -871,7 +871,21 @@ public:
         }
     }
 
-    void printActorCoactors(string Actorname, MovieList &movieList)
+    void printActorCoactors(string Actorname)
+    {
+        if (actorListHashmap.count(Actorname) == 0)
+        {
+            cout << "Actor Not Found" << endl;
+        }
+        else
+        {
+            map<string, MovieList>::iterator actoritr;
+            actoritr = actorListHashmap.find(Actorname);
+            actoritr->second.SearchCoActor(Actorname);
+        }
+    }
+
+    void printActorofCoactors(string Actorname, MovieList &movieList)
     {
         if (movieList.actorListHashmap.count(Actorname) == 0)
         {
@@ -1400,7 +1414,7 @@ int main()
      cout << t << endl;
      M.printActorMovies(t);*/
 
-    // M.printActorCoactors("Jada Pinkett Smith");
+    M.printActorCoactors("Jada Pinkett Smith");
     M.printCoactorsOfCoactors("CCH Pounder", M);
     string Actorname = "CCH Pounder";
     M.checkblah(Actorname,M.actorListHashmap);
