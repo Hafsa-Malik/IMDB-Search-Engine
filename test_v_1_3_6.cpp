@@ -974,11 +974,11 @@ public:
     }
 
     //------------------Task8-----------------------------------
-    void SearchMovie(string title, MovieList &movieList)
+    void SearchMovie(string title)
     {
         //Searches and stores the data in Loc_ of the given movie
         // LinkedList<MovieNode> movies;
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
 
         while (temp != NULL)
         {
@@ -1038,9 +1038,9 @@ public:
 
     //-------------Task11----------------------------------------
     //Search and print movies of a certain genre
-    void PrintGenreMovie(string genre, MovieList &movieList)
+    void PrintGenreMovie(string genre)
     {
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
         LinkedList<string> GenreMovies;
         while (temp != NULL)
         {
@@ -1056,12 +1056,12 @@ public:
 
     //--------------Task12---------------
     //Prints the movies rating wise
-    void PrintMoviesRatingWise(MovieList &movieList)
+    void PrintMoviesRatingWise()
     {
         string name;
         float rating;
         LinkedList<MovieNode> movies;
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
         while (temp != NULL)
         {
             movies.InsertAtEnd(*temp);
@@ -1088,11 +1088,11 @@ public:
 
     //-------------Task13----------------------------------------
     //Search and print movies of a certain genre rating wise
-    void PrintGenreRatingWise(string genre, MovieList &movieList)
+    void PrintGenreRatingWise(string genre)
     {
         string name;
         float rating;
-        MovieNode *temp = movieList.start;
+        MovieNode *temp = start;
         LinkedList<MovieNode> GenreMovies;
         while (temp != NULL)
         {
@@ -1664,7 +1664,7 @@ int main()
     M.printActorCoactors("Jada Pinkett Smith");
     M.printCoactorsOfCoactors("CCH Pounder", M);
     string Actorname = "CCH Pounder";
-    M.SearchMovie("Pirates", M);
+    M.SearchMovie("Pirates");
     // M.checkblah(Actorname,M.actorListHashmap);
     // M.checkIfCoActor("Christoph Waltz", "Rory Kinnear");
     cout << endl;
