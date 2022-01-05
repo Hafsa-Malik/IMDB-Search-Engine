@@ -911,30 +911,15 @@ public:
     //-------------------------------Task 4-------------------------------
     void printCoactorsOfCoactors(string Actorname, MovieList &movieList)
     {
-        int count = 0;
-        map<string, MovieList> tempactorListHashmap(actorListHashmap.begin(), actorListHashmap.end());
-        map<string, MovieList>::iterator actoritrl;
-        cout << "\nThe map gquiz1 is : \n";
-        cout << "\tKEY\tELEMENT\n";
-        for (actoritrl = movieList.actorListHashmap.begin(); actoritrl != movieList.actorListHashmap.end(); ++actoritrl)
-        {
-            if (count > 30)
-                break;
-            count++;
-            cout << '\t' << actoritrl->first << endl;
-            actoritrl->second.showMovies();
-        }
-
         //making a temp copy of hashmap to pass on the function
         // assigning the elements from gquiz1 to gquiz2
 
-        if (tempactorListHashmap.count(Actorname) == 0)
-            cout << "AAAAA" << endl;
+        if (actorListHashmap.count(Actorname) == 0)
+            cout << "Actor Not Found!" << endl;
         else
         {
             map<string, MovieList>::iterator actoritr;
             actoritr = actorListHashmap.find(Actorname);
-            cout << "LLLLL" << endl;
             actoritr->second.searchCoActorOfCoActors(Actorname, movieList);
         }
     }
@@ -989,7 +974,7 @@ public:
     }
 
     //------------------Task8-----------------------------------
-    MovieNode *SearchMovie(string title, MovieList &movieList)
+    void SearchMovie(string title, MovieList &movieList)
     {
         //Searches and stores the data in Loc_ of the given movie
         LinkedList<MovieNode> movies;
